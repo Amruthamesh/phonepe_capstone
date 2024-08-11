@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import psycopg2
 import requests
+import certifi
 import streamlit as st
 import plotly.express as px
 
@@ -89,7 +90,7 @@ def data_overview():
 
 def state_list():
     amru = psycopg2.connect(
-        host='localhost', user='postgres', password='***', database='phonepe')
+        host='localhost', user='postgres', password='Amrutha', database='phonepe')
     cursor = amru.cursor()
     cursor.execute(f"""select distinct state from aggregated_transaction
                         order by state asc;""")
@@ -100,7 +101,7 @@ def state_list():
 
 def year_list():
     amru = psycopg2.connect(
-        host='localhost', user='postgres', password='***', database='phonepe')
+        host='localhost', user='postgres', password='Amrutha', database='phonepe')
     cursor = amru.cursor()
     cursor.execute(f"""select distinct year from aggregated_transaction
                         order by year asc;""")
@@ -111,14 +112,13 @@ def year_list():
 
 def brand_list():
     amru = psycopg2.connect(
-        host='localhost', user='postgres', password='***', database='phonepe')
+        host='localhost', user='postgres', password='Amrutha', database='phonepe')
     cursor = amru.cursor()
     cursor.execute(f"""select distinct user_brand from aggregated_user
                         order by user_brand asc;""")
     s = cursor.fetchall()
     brand = [i[0] for i in s]
     return brand
-
 
 def find_district(pincode):
     url = "https://api.postalpincode.in/pincode/"
@@ -208,8 +208,6 @@ class data_extraction:
         except:
             pass
 
-
-
     def map_transaction():
         try:
             path = "phonepe_pulse_git/data/map/transaction/hover/country/india/state/"
@@ -245,8 +243,6 @@ class data_extraction:
         
         except:
             pass
-
-
 
     def map_user():
         try:
@@ -449,7 +445,7 @@ class data_transform:
 class data_load:
 
     def sql_table_creation():
-        amru = psycopg2.connect(host='localhost', user='postgres', password='***', database='phonepe')
+        amru = psycopg2.connect(host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute("create table if not exists aggregated_transaction(\
                             state				varchar(255),\
@@ -509,7 +505,7 @@ class data_load:
         amru.close()
 
     def data_migration():
-        amru = psycopg2.connect(host='localhost', user='postgres', password='***', database='phonepe')
+        amru = psycopg2.connect(host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
 
         cursor.execute("delete from aggregated_transaction;\
@@ -623,7 +619,7 @@ class state:
 
     def original_state_list():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select distinct state 
                             from aggregated_transaction
@@ -869,7 +865,7 @@ class aggregated_transaction:
 
     def state_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -890,7 +886,7 @@ class aggregated_transaction:
 
     def state_wise_total_transaction_amount():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -913,7 +909,7 @@ class aggregated_transaction:
 
     def selectstate_year_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -932,7 +928,7 @@ class aggregated_transaction:
 
     def selectstate_year_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -953,7 +949,7 @@ class aggregated_transaction:
 
     def selectstate_quater_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -972,7 +968,7 @@ class aggregated_transaction:
 
     def selectstate_quater_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -993,7 +989,7 @@ class aggregated_transaction:
 
     def selectstate_type_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1012,7 +1008,7 @@ class aggregated_transaction:
 
     def selectstate_type_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, transaction_type, sum(transaction_amount) as transaction_amount 
                         from aggregated_transaction
@@ -1033,7 +1029,7 @@ class aggregated_transaction:
 
     def selectstate_year_quater_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1052,7 +1048,7 @@ class aggregated_transaction:
 
     def selectstate_year_quater_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1073,7 +1069,7 @@ class aggregated_transaction:
 
     def selectstate_year_type_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1092,7 +1088,7 @@ class aggregated_transaction:
 
     def selectstate_year_type_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1113,7 +1109,7 @@ class aggregated_transaction:
 
     def selectstate_quater_type_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1132,7 +1128,7 @@ class aggregated_transaction:
 
     def selectstate_quater_type_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1153,7 +1149,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_quater_wise_total_transaction_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1173,7 +1169,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_quater_wise_total_transaction_amount(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1196,7 +1192,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_type_wise_total_transaction_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1216,7 +1212,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_type_wise_total_transaction_amount(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_amount) as transaction_amount 
                         from aggregated_transaction
@@ -1237,7 +1233,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_quater_type_wise_total_transaction_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1256,7 +1252,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_quater_type_wise_total_transaction_amount(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1277,7 +1273,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_year_wise_total_transaction_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1296,7 +1292,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_year_wise_total_transaction_amount(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_amount) as transaction_amount
                         from aggregated_transaction
@@ -1317,7 +1313,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_type_wise_total_transaction_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1336,7 +1332,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_type_wise_total_transaction_amount(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                         from aggregated_transaction
@@ -1357,7 +1353,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_year_type_wise_total_transaction_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1376,7 +1372,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_year_type_wise_total_transaction_amount(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount
                         from aggregated_transaction
@@ -1397,7 +1393,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_selectquater_type_wise_total_transaction_count(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -1416,7 +1412,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_selectquater_type_wise_total_transaction_amount(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                         from aggregated_transaction
@@ -1439,7 +1435,7 @@ class aggregated_transaction:
 
     def year_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1456,7 +1452,7 @@ class aggregated_transaction:
 
     def year_wise_total_transaction_amount():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1476,7 +1472,7 @@ class aggregated_transaction:
 
     def year_quater_wise_total_transaction_count():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1494,7 +1490,7 @@ class aggregated_transaction:
 
     def year_quater_wise_total_transaction_amount():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1514,7 +1510,7 @@ class aggregated_transaction:
 
     def year_type_wise_total_transaction_count():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1532,7 +1528,7 @@ class aggregated_transaction:
 
     def year_type_wise_total_transaction_amount():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1552,7 +1548,7 @@ class aggregated_transaction:
 
     def selectyear_state_wise_total_transaction_count(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1574,7 +1570,7 @@ class aggregated_transaction:
 
     def selectyear_state_wise_total_transaction_amount(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1598,7 +1594,7 @@ class aggregated_transaction:
 
     def selectyear_quater_wise_total_transaction_count(year_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1617,7 +1613,7 @@ class aggregated_transaction:
 
     def selectyear_quater_wise_total_transaction_amount(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1638,7 +1634,7 @@ class aggregated_transaction:
 
     def selectyear_type_wise_total_transaction_count(year_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1657,7 +1653,7 @@ class aggregated_transaction:
 
     def selectyear_type_wise_total_transaction_amount(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1678,7 +1674,7 @@ class aggregated_transaction:
 
     def selectyear_quater_type_wise_total_transaction_count(year_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1697,7 +1693,7 @@ class aggregated_transaction:
 
     def selectyear_quater_type_wise_total_transaction_amount(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1718,7 +1714,7 @@ class aggregated_transaction:
 
     def selectyear_selectquater_state_wise_total_transaction_count(year_option, quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1740,7 +1736,7 @@ class aggregated_transaction:
 
     def selectyear_selectquater_state_wise_total_transaction_amount(year_option, quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1764,7 +1760,7 @@ class aggregated_transaction:
 
     def selectyear_selectquater_type_wise_total_transaction_count(year_option, quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1783,7 +1779,7 @@ class aggregated_transaction:
 
     def selectyear_selectquater_type_wise_total_transaction_amount(year_option, quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1806,7 +1802,7 @@ class aggregated_transaction:
 
     def quater_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1824,7 +1820,7 @@ class aggregated_transaction:
 
     def quater_wise_total_transaction_amount():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1844,7 +1840,7 @@ class aggregated_transaction:
 
     def year_quater_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1862,7 +1858,7 @@ class aggregated_transaction:
 
     def year_quater_wise_total_transaction_amount():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1882,7 +1878,7 @@ class aggregated_transaction:
 
     def quater_type_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1900,7 +1896,7 @@ class aggregated_transaction:
 
     def quater_type_wise_total_transaction_amount():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1920,7 +1916,7 @@ class aggregated_transaction:
     
     def selectquater_state_wise_total_transaction_count(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1942,7 +1938,7 @@ class aggregated_transaction:
 
     def selectquater_state_wise_total_transaction_amount(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -1966,7 +1962,7 @@ class aggregated_transaction:
 
     def selectquater_year_wise_total_transaction_count(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -1985,7 +1981,7 @@ class aggregated_transaction:
 
     def selectquater_year_wise_total_transaction_amount(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2006,7 +2002,7 @@ class aggregated_transaction:
 
     def selectquater_type_wise_total_transaction_count(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2017,7 +2013,7 @@ class aggregated_transaction:
         i = [i for i in range(1, len(s)+1)]
         pd.set_option('display.max_columns', None)
         data = pd.DataFrame(
-            s, columns=['Quater', 'Transaction TyAmruthape', 'Transaction Count'], index=i)
+            s, columns=['Quater', 'Transaction Type', 'Transaction Count'], index=i)
         data = data.rename_axis('S.No')
         data['Transaction'] = data['Transaction Count'].apply(lambda x: convert.rupees(str(x)))
         data.index = data.index.map(lambda x: '{:^{}}'.format(x, 10))
@@ -2025,7 +2021,7 @@ class aggregated_transaction:
 
     def selectquater_type_wise_total_transaction_amount(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2046,7 +2042,7 @@ class aggregated_transaction:
 
     def selectquater_year_type_wise_total_transaction_count(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2065,7 +2061,7 @@ class aggregated_transaction:
 
     def selectquater_year_type_wise_total_transaction_amount(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2088,7 +2084,7 @@ class aggregated_transaction:
 
     def type_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2106,7 +2102,7 @@ class aggregated_transaction:
 
     def type_wise_total_transaction_amount():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2126,7 +2122,7 @@ class aggregated_transaction:
 
     def type_year_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2144,7 +2140,7 @@ class aggregated_transaction:
 
     def type_year_wise_total_transaction_amount():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2164,7 +2160,7 @@ class aggregated_transaction:
 
     def type_quater_wise_total_transaction_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2182,7 +2178,7 @@ class aggregated_transaction:
 
     def type_quater_wise_total_transaction_amount():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2202,7 +2198,7 @@ class aggregated_transaction:
 
     def type_year_quater_wise_total_transaction_count(type_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2221,7 +2217,7 @@ class aggregated_transaction:
 
     def type_year_quater_wise_total_transaction_amount(type_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2242,7 +2238,7 @@ class aggregated_transaction:
 
     def selecttype_state_wise_total_transaction_count(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2264,7 +2260,7 @@ class aggregated_transaction:
 
     def selecttype_state_wise_total_transaction_amount(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2288,7 +2284,7 @@ class aggregated_transaction:
 
     def selecttype_year_wise_total_transaction_count(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2307,7 +2303,7 @@ class aggregated_transaction:
 
     def selecttype_year_wise_total_transaction_amount(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2328,7 +2324,7 @@ class aggregated_transaction:
 
     def selecttype_quater_wise_total_transaction_count(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2347,7 +2343,7 @@ class aggregated_transaction:
 
     def selecttype_quater_wise_total_transaction_amount(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2368,7 +2364,7 @@ class aggregated_transaction:
 
     def selecttype_year_quater_wise_total_transaction_count(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2387,7 +2383,7 @@ class aggregated_transaction:
 
     def selecttype_year_quater_wise_total_transaction_amount(type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2408,7 +2404,7 @@ class aggregated_transaction:
 
     def selectstate_selecttype_year_wise_total_transaction_count(state_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2427,7 +2423,7 @@ class aggregated_transaction:
 
     def selectstate_selecttype_year_wise_total_transaction_amount(state_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2448,7 +2444,7 @@ class aggregated_transaction:
 
     def selectstate_selecttype_quater_wise_total_transaction_count(state_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2467,7 +2463,7 @@ class aggregated_transaction:
 
     def selectstate_selecttype_quater_wise_total_transaction_amount(state_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2488,7 +2484,7 @@ class aggregated_transaction:
 
     def selectstate_selecttype_year_quater_wise_total_transaction_count(state_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2507,7 +2503,7 @@ class aggregated_transaction:
 
     def selectstate_selecttype_year_quater_wise_total_transaction_amount(state_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2528,7 +2524,7 @@ class aggregated_transaction:
 
     def selectyear_selecttype_state_wise_total_transaction_count(year_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2550,7 +2546,7 @@ class aggregated_transaction:
 
     def selectyear_selecttype_state_wise_total_transaction_amount(year_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2574,7 +2570,7 @@ class aggregated_transaction:
 
     def selectyear_selecttype_quater_wise_total_transaction_count(year_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2593,7 +2589,7 @@ class aggregated_transaction:
 
     def selectyear_selecttype_quater_wise_total_transaction_amount(year_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2614,7 +2610,7 @@ class aggregated_transaction:
 
     def selectquater_selecttype_state_wise_total_transaction_count(quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2636,7 +2632,7 @@ class aggregated_transaction:
 
     def selectquater_selecttype_state_wise_total_transaction_amount(quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2660,7 +2656,7 @@ class aggregated_transaction:
 
     def selectquater_selecttype_year_wise_total_transaction_count(quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2679,7 +2675,7 @@ class aggregated_transaction:
 
     def selectquater_selecttype_year_wise_total_transaction_amount(quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2700,7 +2696,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_selecttype_quater_wise_total_transaction_count(state_option, year_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2719,7 +2715,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_selecttype_quater_wise_total_transaction_amount(state_option, year_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2740,7 +2736,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_selecttype_year_wise_total_transaction_count(state_option, quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2759,7 +2755,7 @@ class aggregated_transaction:
 
     def selectstate_selectquater_selecttype_year_wise_total_transaction_amount(state_option, quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2780,7 +2776,7 @@ class aggregated_transaction:
 
     def selectyear_selectquater_selecttype_state_wise_total_transaction_count(year_option, quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                             from aggregated_transaction
@@ -2802,7 +2798,7 @@ class aggregated_transaction:
 
     def selectyear_selectquater_selecttype_state_wise_total_transaction_amount(year_option, quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -2826,7 +2822,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_selectquater_selecttype_wise_total_transaction_count(state_option, year_option, quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_count) as transaction_count 
                         from aggregated_transaction
@@ -2844,7 +2840,7 @@ class aggregated_transaction:
 
     def selectstate_selectyear_selectquater_selecttype_wise_total_transaction_amount(state_option, year_option, quater_option, type_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, transaction_type, sum(transaction_amount) as transaction_amount 
                         from aggregated_transaction
@@ -2869,7 +2865,7 @@ class aggregated_user:
 
     def state_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, sum(user_count) as user_count 
                             from aggregated_user
@@ -2889,7 +2885,7 @@ class aggregated_user:
 
     def selectyear_state_wise_total_user_count(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(user_count) as user_count 
                                 from aggregated_user
@@ -2910,7 +2906,7 @@ class aggregated_user:
 
     def selectquater_state_wise_total_user_count(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(user_count) as user_count 
                                 from aggregated_user
@@ -2931,7 +2927,7 @@ class aggregated_user:
 
     def selectbrand_state_wise_total_user_count(brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, user_brand, sum(user_count) as user_count 
                                 from aggregated_user
@@ -2954,7 +2950,7 @@ class aggregated_user:
 
     def selectstate_year_wise_total_user_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(user_count) as user_count 
                                 from aggregated_user
@@ -2973,7 +2969,7 @@ class aggregated_user:
 
     def selectstate_quater_wise_total_user_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -2992,7 +2988,7 @@ class aggregated_user:
 
     def selectstate_brand_wise_total_user_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3011,7 +3007,7 @@ class aggregated_user:
 
     def selectstate_year_quater_wise_total_user_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3030,7 +3026,7 @@ class aggregated_user:
 
     def selectstate_selectyear_quater_wise_total_user_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3049,7 +3045,7 @@ class aggregated_user:
 
     def selectstate_selectyear_brand_wise_total_user_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3068,7 +3064,7 @@ class aggregated_user:
 
     def selectstate_selectquater_year_wise_total_user_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3087,7 +3083,7 @@ class aggregated_user:
 
     def selectstate_selectquater_brand_wise_total_user_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3106,7 +3102,7 @@ class aggregated_user:
 
     def selectstate_selectyear_selectquater_brand_wise_total_user_count(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, user_count 
                             from aggregated_user
@@ -3124,7 +3120,7 @@ class aggregated_user:
 
     def selectstate_selectyear_quater_brand_wise_total_user_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, user_count 
                             from aggregated_user
@@ -3142,7 +3138,7 @@ class aggregated_user:
 
     def selectstate_selectquater_year_brand_wise_total_user_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, user_count 
                             from aggregated_user
@@ -3164,7 +3160,7 @@ class aggregated_user:
 
     def year_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, sum(user_count) as user_count 
                                 from aggregated_user
@@ -3181,7 +3177,7 @@ class aggregated_user:
 
     def year_quater_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3199,7 +3195,7 @@ class aggregated_user:
 
     def year_brand_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3217,7 +3213,7 @@ class aggregated_user:
     
     def quater_brand_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3236,7 +3232,7 @@ class aggregated_user:
 
     def selectyear_quater_wise_total_user_count(year_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3255,7 +3251,7 @@ class aggregated_user:
 
     def selectyear_brand_wise_total_user_count(year_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3274,7 +3270,7 @@ class aggregated_user:
 
     def selectyear_quater_brand_wise_total_user_count(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3294,7 +3290,7 @@ class aggregated_user:
 
     def selectyear_selectstate_brand_wise_total_user_count(state_option, year_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, user_brand, sum(user_count) as user_count 
                                 from aggregated_user
@@ -3313,7 +3309,7 @@ class aggregated_user:
 
     def selectyear_selectstate_quater_brand_wise_total_user_count(state_option, year_option, quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, sum(user_count) as user_count 
                                 from aggregated_user
@@ -3332,7 +3328,7 @@ class aggregated_user:
 
     def selectyear_selectquater_state_wise_total_user_count(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3353,7 +3349,7 @@ class aggregated_user:
 
     def selectyear_selectquater_brand_wise_total_user_count(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3374,7 +3370,7 @@ class aggregated_user:
 
     def quater_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, sum(user_count) as user_count 
                                 from aggregated_user
@@ -3391,7 +3387,7 @@ class aggregated_user:
 
     def selectquater_year_wise_total_user_count(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -3410,7 +3406,7 @@ class aggregated_user:
 
     def selectquater_brand_wise_total_user_count(quater_option):
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3429,7 +3425,7 @@ class aggregated_user:
 
     def selectquater_year_brand_wise_total_user_count(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3451,7 +3447,7 @@ class aggregated_user:
 
     def brand_wise_total_user_count():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3469,7 +3465,7 @@ class aggregated_user:
 
     def selectbrand_state_wise_total_user_count(brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3490,7 +3486,7 @@ class aggregated_user:
 
     def selectbrand_year_wise_total_user_count(brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3509,7 +3505,7 @@ class aggregated_user:
 
     def selectbrand_quater_wise_total_user_count(brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3528,7 +3524,7 @@ class aggregated_user:
 
     def selectbrand_year_quater_wise_total_user_count(brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3547,7 +3543,7 @@ class aggregated_user:
 
     def selectstate_selectbrand_year_wise_total_user_count(state_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3566,7 +3562,7 @@ class aggregated_user:
 
     def selectstate_selectbrand_quater_wise_total_user_count(state_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3585,7 +3581,7 @@ class aggregated_user:
 
     def selectstate_selectbrand_year_quater_wise_total_user_count(state_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3604,7 +3600,7 @@ class aggregated_user:
 
     def selectyear_selectbrand_state_wise_total_user_count(year_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3625,7 +3621,7 @@ class aggregated_user:
 
     def selectyear_selectbrand_quater_wise_total_user_count(year_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3644,7 +3640,7 @@ class aggregated_user:
 
     def selectquater_selectbrand_state_wise_total_user_count(quater_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3665,7 +3661,7 @@ class aggregated_user:
 
     def selectquater_selectbrand_year_wise_total_user_count(quater_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3684,7 +3680,7 @@ class aggregated_user:
 
     def selectstate_selectyear_selectbrand_quater_wise_total_user_count(state_option, year_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3703,7 +3699,7 @@ class aggregated_user:
 
     def selectstate_selectquater_selectbrand_year_wise_total_user_count(state_option, quater_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3722,7 +3718,7 @@ class aggregated_user:
 
     def selectyear_selectquater_selectbrand_state_wise_total_user_count(year_option, quater_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, sum(user_count) as user_count 
                             from aggregated_user
@@ -3743,7 +3739,7 @@ class aggregated_user:
 
     def selectstate_selectyear_selectquater_selectbrand_wise_total_user_count(state_option, year_option, quater_option, brand_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, user_brand, sum(user_count) as user_count 
                         from aggregated_user
@@ -3766,7 +3762,7 @@ class map_transaction:
 
     def selectstate_district_wise_total_transaction_count(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, district, sum(transaction_count) as transaction_count 
                             from map_transaction
@@ -3785,7 +3781,7 @@ class map_transaction:
 
     def selectstate_district_wise_total_transaction_amount(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, district, sum(transaction_amount) as transaction_amount 
                             from map_transaction
@@ -3806,7 +3802,7 @@ class map_transaction:
 
     def selectstate_selectyear_district_wise_total_transaction_count(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, district, sum(transaction_count) as transaction_count 
                             from map_transaction
@@ -3825,7 +3821,7 @@ class map_transaction:
 
     def selectstate_selectyear_district_wise_total_transaction_amount(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, district, sum(transaction_amount) as transaction_amount 
                             from map_transaction
@@ -3846,7 +3842,7 @@ class map_transaction:
 
     def selectstate_selectquater_district_wise_total_transaction_count(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, district, sum(transaction_count) as transaction_count 
                             from map_transaction
@@ -3865,7 +3861,7 @@ class map_transaction:
 
     def selectstate_selectquater_district_wise_total_transaction_amount(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, district, sum(transaction_amount) as transaction_amount 
                             from map_transaction
@@ -3886,7 +3882,7 @@ class map_transaction:
 
     def selectstate_selectyear_selectquater_district_wise_total_transaction_count(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, sum(transaction_count) as transaction_count 
                             from map_transaction
@@ -3905,7 +3901,7 @@ class map_transaction:
 
     def selectstate_selectyear_selectquater_district_wise_total_transaction_amount(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, sum(transaction_amount) as transaction_amount 
                             from map_transaction
@@ -3930,7 +3926,7 @@ class map_user:
 
     def state_wise_total_registered_user():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, sum(registered_user) as registered_user 
                                 from map_user
@@ -3950,7 +3946,7 @@ class map_user:
 
     def state_wise_total_app_opens():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, sum(app_opens) as app_opens 
                                 from map_user
@@ -3970,7 +3966,7 @@ class map_user:
 
     def selectyear_state_wise_total_registered_user(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(registered_user) as registered_user 
                                 from map_user
@@ -3991,7 +3987,7 @@ class map_user:
 
     def selectyear_state_wise_total_app_opens(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(app_opens) as app_opens 
                                 from map_user
@@ -4012,7 +4008,7 @@ class map_user:
 
     def selectquater_state_wise_total_registered_user(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(registered_user) as registered_user 
                                 from map_user
@@ -4033,7 +4029,7 @@ class map_user:
 
     def selectquater_state_wise_total_app_opens(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4056,7 +4052,7 @@ class map_user:
 
     def selectstate_year_wise_total_registered_user(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(registered_user) as registered_user 
                                 from map_user
@@ -4075,7 +4071,7 @@ class map_user:
 
     def selectstate_year_wise_total_app_opens(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, sum(app_opens) as app_opens 
                                 from map_user
@@ -4094,7 +4090,7 @@ class map_user:
 
     def selectstate_quater_wise_total_registered_user(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(registered_user) as registered_user 
                             from map_user
@@ -4113,7 +4109,7 @@ class map_user:
 
     def selectstate_quater_wise_total_app_opens(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4132,7 +4128,7 @@ class map_user:
 
     def selectstate_year_quater_wise_total_registered_user(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(registered_user) as registered_user 
                             from map_user
@@ -4151,7 +4147,7 @@ class map_user:
 
     def selectstate_year_quater_wise_total_app_opens(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4170,7 +4166,7 @@ class map_user:
 
     def selectstate_selectyear_quater_wise_total_registered_user(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(registered_user) as registered_user 
                             from map_user
@@ -4189,7 +4185,7 @@ class map_user:
 
     def selectstate_selectyear_quater_wise_total_app_opens(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4208,7 +4204,7 @@ class map_user:
 
     def selectstate_selectquater_year_wise_total_registered_user(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(registered_user) as registered_user 
                             from map_user
@@ -4227,7 +4223,7 @@ class map_user:
 
     def selectstate_selectquater_year_wise_total_app_opens(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(app_opens) as app_opens 
                             from map_user
@@ -4248,7 +4244,7 @@ class map_user:
 
     def year_wise_total_registered_user():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, sum(registered_user) as registered_user 
                                 from map_user
@@ -4265,7 +4261,7 @@ class map_user:
 
     def year_wise_total_app_opens():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, sum(app_opens) as app_opens 
                                 from map_user
@@ -4283,7 +4279,7 @@ class map_user:
 
     def year_quater_wise_total_registered_user():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(registered_user) as registered_user 
                                 from map_user
@@ -4301,7 +4297,7 @@ class map_user:
 
     def year_quater_wise_total_app_opens():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4319,7 +4315,7 @@ class map_user:
 
     def selectyear_quater_wise_total_registered_user(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(registered_user) as registered_user 
                             from map_user
@@ -4338,7 +4334,7 @@ class map_user:
 
     def selectyear_quater_wise_total_app_opens(year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4357,7 +4353,7 @@ class map_user:
 
     def selectyear_selectquater_state_wise_total_registered_user(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(registered_user) as registered_user 
                                 from map_user
@@ -4378,7 +4374,7 @@ class map_user:
 
     def selectyear_selectquater_state_wise_total_app_opens(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4401,7 +4397,7 @@ class map_user:
 
     def quater_wise_total_registered_user():
         amru = psycopg2.connect(host='localhost', user='postgres',
-                                password='***', database='phonepe')
+                                password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, sum(registered_user) as registered_user 
                                 from map_user
@@ -4419,7 +4415,7 @@ class map_user:
 
     def quater_wise_total_app_opens():
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select quater, sum(app_opens) as app_opens 
                                 from map_user
@@ -4437,7 +4433,7 @@ class map_user:
 
     def selectquater_year_wise_total_registered_user(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(registered_user) as registered_user 
                             from map_user
@@ -4456,7 +4452,7 @@ class map_user:
 
     def selectquater_year_wise_total_app_opens(quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select year, quater, sum(app_opens) as app_opens 
                             from map_user
@@ -4477,7 +4473,7 @@ class map_user:
 
     def selectstate_district_wise_total_registered_user(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, district, sum(registered_user) as registered_user 
                                 from map_user
@@ -4496,7 +4492,7 @@ class map_user:
 
     def selectstate_district_wise_total_app_opens(state_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, district, sum(app_opens) as app_opens 
                                 from map_user
@@ -4515,7 +4511,7 @@ class map_user:
 
     def selectstate_selectyear_district_wise_total_registered_user(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, district, sum(registered_user) as registered_user 
                                 from map_user
@@ -4534,7 +4530,7 @@ class map_user:
 
     def selectstate_selectyear_district_wise_total_app_opens(state_option, year_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, district, sum(app_opens) as app_opens 
                                 from map_user
@@ -4553,7 +4549,7 @@ class map_user:
 
     def selectstate_selectquater_district_wise_total_registered_user(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, district, sum(registered_user) as registered_user 
                                 from map_user
@@ -4572,7 +4568,7 @@ class map_user:
 
     def selectstate_selectquater_district_wise_total_app_opens(state_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, quater, district, sum(app_opens) as app_opens 
                                 from map_user
@@ -4591,7 +4587,7 @@ class map_user:
 
     def selectstate_selectyear_selectquater_district_wise_total_registered_user(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, sum(registered_user) as registered_user 
                                 from map_user
@@ -4610,7 +4606,7 @@ class map_user:
 
     def selectstate_selectyear_selectquater_district_wise_total_app_opens(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, sum(app_opens) as app_opens 
                                 from map_user
@@ -4634,7 +4630,7 @@ class top_transaction_and_user:
 
     def selectyear_selectquater_state_wise_top10_transaction(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(transaction_count) as transaction_count, sum(transaction_amount) as transaction_amount 
                             from aggregated_transaction
@@ -4658,7 +4654,7 @@ class top_transaction_and_user:
 
     def selectyear_selectquater_district_wise_top10_transaction(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, transaction_count, transaction_amount
                             from top_transaction_district
@@ -4683,7 +4679,7 @@ class top_transaction_and_user:
 
     def selectyear_selectquater_pincode_wise_top10_transaction(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, pincode, sum(transaction_count) as transaction_count, sum(transaction_amount) as transaction_amount
                             from top_transaction_pincode
@@ -4707,7 +4703,7 @@ class top_transaction_and_user:
 
     def selectstate_selectyear_selectquater_district_wise_top10_transaction(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, transaction_count, transaction_amount
                             from top_transaction_district
@@ -4731,7 +4727,7 @@ class top_transaction_and_user:
 
     def selectstate_selectyear_selectquater_pincode_wise_top10_transaction(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, pincode, sum(transaction_count) as transaction_count, sum(transaction_amount) as transaction_amount
                             from top_transaction_pincode
@@ -4758,7 +4754,7 @@ class top_transaction_and_user:
 
     def selectyear_selectquater_state_wise_top10_user(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, sum(user_count) as user_count 
                             from aggregated_user
@@ -4778,7 +4774,7 @@ class top_transaction_and_user:
 
     def selectyear_selectquater_district_wise_top10_user(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, registered_user
                             from top_user_district
@@ -4799,7 +4795,7 @@ class top_transaction_and_user:
 
     def selectyear_selectquater_pincode_wise_top10_user(year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, pincode, sum(registered_user) as registered_user
                             from top_user_pincode
@@ -4821,7 +4817,7 @@ class top_transaction_and_user:
 
     def selectstate_selectyear_selectquater_district_wise_top10_user(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, district, registered_user
                             from top_user_district
@@ -4841,7 +4837,7 @@ class top_transaction_and_user:
 
     def selectstate_selectyear_selectquater_pincode_wise_top10_user(state_option, year_option, quater_option):
         amru = psycopg2.connect(
-            host='localhost', user='postgres', password='***', database='phonepe')
+            host='localhost', user='postgres', password='Amrutha', database='phonepe')
         cursor = amru.cursor()
         cursor.execute(f"""select state, year, quater, pincode, sum(registered_user) as registered_user
                             from top_user_pincode
@@ -6499,7 +6495,7 @@ if option:
     if option == 'Data Collection':
         data_collection()
         st.success('Data successfully cloned from the PhonePe Pulse Git repository')
-        st.snow()
+        st.balloons()
 
     elif option == 'Data Overview':
         def data():
@@ -6590,7 +6586,7 @@ if option:
             data_load.sql_table_creation()
             data_load.data_migration()
             st.success('Data successfully Migrated to the SQL Database')
-            st.snow()         
+            st.balloons()         
 
     elif option == 'Data Insights and Exploration':
         s = state_list()
@@ -6601,4 +6597,4 @@ if option:
 
     elif option == 'Exit':
         st.success('Thank you for your time. Exiting the application')
-        st.snow()
+        st.balloons()
